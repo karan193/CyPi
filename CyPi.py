@@ -33,7 +33,7 @@ def check_hash(title = None):
 		cursor = connection.cursor()
 
 		#finds the file in the database using the file title
-		sqlite_fetch_blob = """SELECT * FROM 'files_new' WHERE title=?"""
+		sqlite_fetch_blob = """SELECT * FROM 'files' WHERE title=?"""
 		file_contents_db = cursor.execute(sqlite_fetch_blob,(file_name,))
 
 		hasher_db = hashlib.md5()
@@ -77,7 +77,7 @@ def check_hash(title = None):
 		cursor = connection.cursor()
 
 		#finds the file in the database using the file title
-		sqlite_fetch_blob = """SELECT * FROM 'files_new' WHERE title=?"""
+		sqlite_fetch_blob = """SELECT * FROM 'files' WHERE title=?"""
 		file_contents_db = cursor.execute(sqlite_fetch_blob,(file_name,))
 
 		hasher_db = hashlib.md5()
@@ -101,7 +101,7 @@ def show():
 	cursor = connection.cursor()
 
 	#shows all files in the database
-	sqlite_show = """SELECT * FROM 'files_new';"""
+	sqlite_show = """SELECT * FROM 'files';"""
 
 	cursor.execute(sqlite_show)
 	
@@ -133,7 +133,7 @@ def insert_all():
 		title = filename[:-4]
 
 		#insert files with specified title and contents
-		sqlite_insert_all = """INSERT INTO 'files_new'
+		sqlite_insert_all = """INSERT INTO 'files'
 						  ('title', 'contents') 
 						  VALUES (?, ?);"""
 		cursor.execute(sqlite_insert_all, (title, data))
@@ -153,7 +153,7 @@ def insert(title, content):
 		data = file.read()
 
 	#insert files with specified title and contents
-	sqlite_insert = """INSERT INTO 'files_new'
+	sqlite_insert = """INSERT INTO 'files'
 					  ('title', 'contents') 
 					  VALUES (?, ?);"""
 
@@ -171,7 +171,7 @@ def delete(index):
 	cursor = connection.cursor()
 
 	#delete the files with the specified title
-	sqlite_delete_with_param = """DELETE FROM 'files_new' WHERE id=?;"""
+	sqlite_delete_with_param = """DELETE FROM 'files' WHERE id=?;"""
 
 	cursor.execute(sqlite_delete_with_param, (index,))
 	connection.commit()
@@ -187,7 +187,7 @@ def delete_all():
 	cursor = connection.cursor()
 
 	#delete all rows
-	sqlite_delete_all = """DELETE FROM 'files_new';"""
+	sqlite_delete_all = """DELETE FROM 'files';"""
 
 	cursor.execute(sqlite_delete_all)
 	connection.commit()
